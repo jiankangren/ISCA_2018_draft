@@ -1,0 +1,27 @@
+syntax: glob
+*.log 
+*.aux 
+*.cfg 
+*.glo 
+*.idx 
+*.toc 
+*.ilg 
+*.ind 
+*.out 
+*.lof 
+*.lot 
+*.bbl 
+*.blg 
+*.gls 
+*.cut 
+*.hd 
+*.dvi 
+*.ps 
+*.thm 
+*.tgz 
+*.zip 
+*.rpi 
+*.gz 
+*.fls 
+*.fdb_latexmk 
+*.DS_Store
