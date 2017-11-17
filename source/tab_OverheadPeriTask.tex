@@ -1,0 +1,27 @@
+\begin{table}[t]
+\begin{center}
+    \vspace{-5pt}
+\caption{Overheads with different overlap percentages.} \label{tab:OverheadPeriTask}
+    \vspace{-5pt}
+\Fsize{8}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{Im{2.1cm}Ic|c|cIc|c|cI}%33.8 %40.3
+    \Xhline{1.2pt}
+    Benchmarks                                    & \multicolumn{3}{cI}{Sensing}                  & \multicolumn{3}{cI}{Data Transmission} \\
+    \Xhline{1pt}
+    I/O/Peri. overlap                               & 0\%           & 50\%         & 100\%             & 0\%           & 50\%         & 100\%        \\
+    \Xhline{1pt}
+    proc. overhead /\%                          & 44.9           & 43.6           & 43.4                & 43.4          & 42.7          & 41.7        \\
+    \Xhline{1pt}
+    peri. overhead /\%                           & 18.4            & 16.0           & 18.3                & 80.9          & 74.8          & 74.2       \\
+    \Xhline{1pt}
+    stall time/\%                               & 18.4            & 10.8           & 6.1                  & 80.9          & 62.4          & 39.2       \\
+    \Xhline{1pt}
+    Total overhead /\%                         & 63.3           & 54.4           & 49.5                & 124.3        & 105.1         & 78.9       \\
+    \Xhline{1pt}
+    {Overhead Reduction/\%}                         & --           & {14.0}           & {21.8}               & --        & {15.4}         & {36.5}       \\
+    \Xhline{1.2pt}
+\end{tabular}
+\end{center}
+\vspace{-10pt}
+\end{table} 

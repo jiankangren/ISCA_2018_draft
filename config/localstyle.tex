@@ -1,0 +1,147 @@
+% packages & styles
+\usepackage{graphicx}     % Insert figures
+\usepackage{setspace}      % line distance
+
+\usepackage{amssymb, amsmath}    % American Math Society, Symbols, Math equations
+\usepackage{pifont}         % Add a circle around 'x' (\textcircled{x})
+\usepackage{times}          % Times New Roman
+\usepackage{booktabs}    % Tables, http://ddswhu.com/2014/08/24/9-essential-latex-packages/
+%\usepackage{multicol, multirow}     % Double collumns, rows
+\usepackage{float}           % Figure Positions
+\usepackage{makecell}    % Table Cell
+%\usepackage{url}              % Add url in the references, http://blog.csdn.net/perfumekristy/article/details/8680045
+\usepackage{threeparttable} % Three part table
+%\usepackage{subfigure}   % Insert 2 figures side by side
+\usepackage{algorithm,algpseudocode}    % Pseudo code
+\usepackage{lettrine}       % A large letter at the fisrt letter of the article.
+\usepackage{mathrsfs}    % Bold curlycue
+%\usepackage{vector}       % Arrow on the letters: vector
+%\usepackage[nocompress]{cite}   % Citation: [1,2,3,4]
+%\usepackage{cite}           % Citation: [1-4]
+%\usepackage[numbers,sort&compress]{natbib}
+
+\graphicspath{{images/}}
+
+
+\begin{comment}
+\DeclareMathOperator*{\argmin}{argmin}
+\newtheorem{mydef}{Defination}
+\newtheorem{lemma}{Lemma}
+\newtheorem{assumption}{Assumption}
+\newcommand{\block}[1]{
+  \underbrace{\begin{matrix}1 & \cdots & 1\end{matrix}}_{#1}
+}
+\end{comment}
+
+%\newtheorem{lemma}[theorem]{Lemma}
+
+\begin{comment}
+\setlength\abovedisplayskip{0pt}
+\setlength\belowdisplayskip{0pt}
+\setlength\footnotesep{0pt}
+\setlength\floatsep{0pt}
+\setlength\textfloatsep{0pt}
+\end{comment}
+
+%\newenvironment{pproof}[1][Proof]{\begin{trivlist}
+%\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+%\newenvironment{definition}[1][Definition]{\begin{trivlist}
+%\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+%\newenvironment{example}[1][Example]{\begin{trivlist}
+%\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+%\newenvironment{remark}[1][Remark]{\begin{trivlist}
+%\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+
+\begin{comment}
+\newcommand{\vect}[1]{\boldsymbol{#1}}
+\renewcommand{\arraystretch}{1.1}
+%\renewcommand{\baselinestretch}{0.9} \normalsize
+\newcommand{\tabincell}[2]{\begin{tabular}{@{}#1@{}}#2\end{tabular}}
+\end{comment}
+
+%##############################################################################
+% Spacing
+%##############################################################################
+\begin{comment}
+\newcommand{\setblstr}[2][.]{%
+    \renewcommand{\baselinestretch}{#2}%
+    \ifx#1.\else\setarrstr  {#1}\fi%
+}
+
+\newcommand{\setarrstr}[1]{%
+    \renewcommand{\arraystretch}{#1}%
+}
+
+\newenvironment{blstr}[2][.]{%
+    \setblstr[#1]{#2}%
+}{%
+}
+\setlength{\textfloatsep} {12pt plus 2pt minus 2pt}
+\end{comment}
+%##############################################################################
+% Comments
+%##############################################################################
+\begin{comment}
+% Hiding
+\excludecomment{Hidden}
+\newcommand{\Hide}[1]{}
+\newcommand{\ShowHidden}{%
+    \includecomment{Hidden}%
+    \renewcommand{\Hide}[1]{%
+        ##1%
+    }%
+}
+
+\specialcomment{Notes}{%
+    \noindent$\Rightarrow\Rightarrow$%
+}{%
+    $\Leftarrow\Leftarrow$%
+}
+
+\providecommand{\Note}[1]{%
+    \noindent{\bf$\Rightarrow\Rightarrow$#1$\Leftarrow\Leftarrow$}%
+}
+
+\newcommand{\HideNotes}{%
+    \excludecomment{Notes}%
+    \renewcommand{\Note}[1]{}%
+}
+\end{comment}
+%##############################################################################
+% Fonts
+%##############################################################################
+%\begin{comment}
+\newcommand{\Fsize}[2][.]{%
+    \ifthenelse{\equal{#1}{.}}{
+        \fontsize{#2}{#2}%
+    }{%
+        \fontsize{#2}{#1}%
+    }%
+    \selectfont%
+}
+%\DeclareMathSizes{10}{18}{12}{8}
+%\end{comment}
+%##############################################################################
+% Tables
+%##############################################################################
+%\begin{comment}
+\newcommand{\Drop}[1]{%
+    \multirow{2}{*}{#1}%
+}
+\newcolumntype{I}{!{\vrule width 0.8pt}}
+\newenvironment{newitemize}{
+    \begin{itemize}
+      \setlength{\itemsep}{0pt}
+      \setlength{\parskip}{0pt}
+      \setlength{\parsep}{0pt}
+}{\end{itemize}}
+\setlength{\intextsep}{5pt plus 3pt minus 3pt}
+%\setlength\textfloatsep{1.25\baselineskip plus 1pt minus 1pt}
+%\end{comment}
+%##############################################################################
+% Algo
+%##############################################################################
+%\RestyleAlgo{ruled}
+
+%\renewcommand{\algorithmicrequire}{\textbf{Input:}} % Use Input in the format of Algorithm
+%\renewcommand{\algorithmicensure}{\textbf{Output:}} % Use Output in the format of Algorithm 

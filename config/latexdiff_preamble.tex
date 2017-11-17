@@ -1,0 +1,18 @@
+% dsm: Custom latexdiff preamble based on soul highlighting
+\usepackage{color,soul}
+\definecolor{lightgreen}{RGB}{195, 233, 211}
+\sethlcolor{lightgreen}
+\renewcommand{\DIFadd}[1]{{\protect\hl{#1}}}
+% No need to include deleted content
+\providecommand{\DIFdel}[1]{}
+\providecommand{\DIFaddbegin}{}
+\providecommand{\DIFaddend}{}
+\providecommand{\DIFdelbegin}{}
+\providecommand{\DIFdelend}{}
+% Float-safe variants
+\providecommand{\DIFaddFL}[1]{\DIFadd{#1}}
+\providecommand{\DIFdelFL}[1]{\DIFdel{#1}}
+\providecommand{\DIFaddbeginFL}{}
+\providecommand{\DIFaddendFL}{}
+\providecommand{\DIFdelbeginFL}{}
+\providecommand{\DIFdelendFL}{}

@@ -1,0 +1,47 @@
+\section{Related Work} \label{sec:related}
+%\vspace{-5pt}
+%
+To support the task progress under intermittent power supply, both software and hardware recovery mechanisms have been proposed to support automatic recovery of the processor.
+
+\vspace{5pt}
+\noindent\textbf{Software Mechanism: Checkpointing.} \\
+%
+Checkpointing is a software based recovery mechanism for processors.
+Checkpoints are placed in the program, where the processor state are stored into non-volatile memories.
+By rolling back to these checkpoints, the processor can keep the task progress after power failure~\cite{Dong2011Hybrid, Ma2015Architecture}.
+Bronevetsky et al. propose the application level checkpointing strategy on the shared memory systems to enhance the reliability~\cite{Bronevetsky2004Application}.
+Mementos proposes the concept of transiently powered computer and presents a software processing strategy which transforms the general purpose programs into interruptible computations for the general hardware architecture with Flash memory~\cite{ransford2012mementos}.
+Balsamo et al. propose Hibernus and Hibernus++ using FeRAM and an interrupt-based checkpointing solution to reduce the performance overhead~\cite{balsamo2015hibernus,balsamo2016hibernus++,Rodriguez2015Approaches}.
+Jayakumar et al. design QuickRecall and em-Map to integrate FeRAM into main memory to reduce the backup data size and lower the failure voltage threshold~\cite{jayakumar2014quickrecall,jayakumar2015q}.
+In addition to general purpose processor architectures, Mirhoseini et al. target the Application Specific Integrated Circuits (\emph{ASICs}) and propose Idetic and Chime with the help of control data flow graphs (\emph{CDFGs})~\cite{Mirhoseini2013Idetic,Mirhoseini2013Automated,Mirhoseini2016Chime}.
+
+These schemes achieve continuous progress of processors with out peripherals.
+Large rollback overhead may take place while recovering a multi-device system with these strategies. 
+
+\vspace{5pt}
+\noindent\textbf{Hardware Mechanism: Non-volatile Processor.} \\
+%
+Besides the checkpointing mechanisms, researchers also provide solutions in hardware domain.
+Non-volatile processor draws a lot of attention due to its ability to store the system state and data automatically in hardware.
+The first processor chip designed by Wang et al. using FeRAM realizes the ability to backup and restore the processor state and data within $3\mu s$~\cite{wang20123us}.
+Bartling et al. propose a non-volatile logic based Cortex-M0 chip with higher performance and lower leakages~\cite{Bartling2013An}.
+Sakimura et al. from NEC propose the non-volatile magnetic flip-flops~\cite{Sakimura2009Nonvolatile} and a 20MHz non-volatile micro-controller with STT-RAM~\cite{Sakimura201410}.
+Recently, Liu et al. propose an enhanced NVP based on ReRAM which has the highest integration level~\cite{Liu2016a}.
+In addition, Li et al. propose the non-volatile I/O (NVIO) enabling efficient automatic reconfiguration of  I/O interfaces~\cite{li2016hw}.
+
+Compared with software checkpointing strategies, non-volatile devices enable state recovery with higher speed and fewer rollbacks.
+However, these nonvolatile processors lack of flexibility on checkpointing and recovery which may cause inconsistency problems in a multi-device system.
+
+
+\vspace{5pt}
+\noindent\textbf{Inconsistency and Program Partitioning.} \\
+%
+Researchers have noticed the problem of the inconsistency issues while rolling back a system with nonvolatile memories.
+B. Lucia et al.~\cite{Lucia2015} discover and model the data inconsistency problem caused by improper rollbacks after power failures.
+After that, more works~\cite{van2016intermittent}, ~\cite{colin2016chain}, ~\cite{Xie2015} analyze the scenarios of checkpoint recoveries and propose careful checkpointing strategies to ensure the correctness of all checkpoints.
+Recently, an energy-interference-free debugger for intermittent powered systems is proposed by A. Colin et al. to provide a more reliable and convenient debugging platform~\cite{Colin2016An}.
+However, reliabliliy and efficiency challenges still exist when adopting NVP in a TPC system with multiple peripherals and interrupts.
+
+%These works analyzes the transactional program in a TPC system and proposes proper program partitioning methods to avoid sematics issues caused by inconsistency.
+%However, the consistency of the processor and the multiple peripherals raises new challenges.
+%Therefore, REMARK is proposed target on the efficiency and reliability challenges in the recovery of multi-device TPC systems.

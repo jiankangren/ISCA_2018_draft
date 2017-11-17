@@ -1,0 +1,20 @@
+\begin{table}[t]
+\caption{The extended instructions to the instruction set.}\label{tab:InstrSet}
+\Fsize{8}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{cIcIm{4.4cm}}
+    \Xhline{1.2pt}
+    Instructions       & Operators           & Specifications      \\
+    \Xhline{1pt}
+    RSR      & SRaddr   oper2 & Read PSRs with address \emph{SRaddr} to register \emph{oper2}.\\
+    \Xhline{1pt}
+    WSR     & oper1   SRaddr & Write the value of \emph{oper1} to PSRs with address \emph{SRaddr}.\\
+    \Xhline{1pt}
+    WER    & oper1               & Write the value of \emph{oper1} to \emph{EndAddr} register in PRM.\\
+    \Xhline{1pt}
+    ABR     & oper1               & Enable the active backup function, if $oper1=1$; enable the active restore function, if $oper2=0$.\\
+    \Xhline{1pt}
+    EBR     & oper1               & Enable/Disable the backup and restore function when $oper1=1/oper1=0$.\\
+    \Xhline{1.2pt}
+\end{tabular}
+\end{table}

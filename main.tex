@@ -1,0 +1,66 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% This is the template for submission to ISCA 2018
+% The cls file is a modified from  'sig-alternate.cls'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass{sig-alternate} 
+\usepackage{mathptmx} % This is Times font
+
+\newcommand{\ignore}[1]{}
+\usepackage{fancyhdr}
+\usepackage[normalem]{ulem}
+\usepackage[hyphens]{url}
+\usepackage{hyperref}
+%\input{config/localstyle}
+
+
+%%%%%%%%%%%---SETME-----%%%%%%%%%%%%%
+\newcommand{\iscasubmissionnumber}{364}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\fancypagestyle{firstpage}{
+  \fancyhf{}
+\setlength{\headheight}{50pt}
+\renewcommand{\headrulewidth}{0pt}
+  \fancyhead[C]{\normalsize{ISCA 2018 Submission
+      \textbf{\#\iscasubmissionnumber} \\ Confidential Draft: DO NOT DISTRIBUTE}} 
+  \pagenumbering{arabic}
+}  
+
+%%%%%%%%%%%---SETME-----%%%%%%%%%%%%%
+\title{REMARK: Reliable and Efficient Multi-device Recovery Framework for Transiently Powered Computers} 
+\author{}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\maketitle
+\thispagestyle{firstpage}
+\pagestyle{plain}
+
+\begin{abstract}
+
+Transiently Powered Computers (TPCs) powered by energy harvesting are becoming popular in today's IoT applications. Although energy harvesting enables the sensor nodes with smaller size and longer lifetime, unstable energy sources frequently break the system execution, posing new design challenges. Existing techniques enable continuous processor executions under intermittent power supply using non-volatile memories and checkpointing techniques. However, few addresses the unique challenges associating checkpoint and recover a syetem with multiple I/O and volatile peripherals devices, which causes major performance degradation. This paper fills this gap by introducing REMARK, a HW/SW co-designed framework enabling reliable and efficient operations in a TPC with multiple peripherals. A REMARK-enabled non-volatile processor chip has been fabricated, based on which a wireless sensor node is implemented to demonstrate reliable and efficient wireless transmission operations under intermittent power supply. Results show that the data transmission efficiency are improved by as much as $13\times$ compared with state-of-the-art. Furthermore, the sensitivity studies on REMARK are also carried out, resulting a program design guideline that improves the performance by as much as 36.5\%.
+
+\end{abstract}
+
+%\begin{spacing}{0.90}
+\input{source/introduction}
+\input{source/motivation}
+\input{source/system}
+\input{source/hardware}
+\input{source/offline}
+\input{source/online}
+\input{source/implementation}
+\input{source/evaluation}
+\input{source/related}
+\input{source/tails}
+%\end{spacing}
+
+%%%%%%% -- PAPER CONTENT ENDS -- %%%%%%%%
+
+%%%%%%%%% -- BIB STYLE AND FILE -- %%%%%%%%
+\bibliographystyle{ieeetr}
+\bibliography{references}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

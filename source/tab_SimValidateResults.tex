@@ -1,0 +1,26 @@
+\begin{table}[t]
+\begin{center}
+\vspace{-10pt}
+\caption{Accuracy evaluation of NVnodeSim.} \label{tab:SimValidateResults}
+\vspace{-5pt}
+\Fsize{8}
+\renewcommand{\arraystretch}{1.5}
+%\setlength{\tabcolsep}{1pt}
+\begin{tabular}{Im{1.37cm}<{\centering}Ic|m{0.89cm}Ic|m{0.99cm}IcI}
+    \Xhline{1.2pt}
+    \multirow{2}{*}{Benchmarks}     & \multicolumn{2}{cI}{Failure Times}       & \multicolumn{3}{cI}{Execution Time/ms} \\
+                                                            \Xcline{2-6}{1pt}
+                                                            & NVnode               & Sim                             & NVnode                & Sim                      & Error         \\
+    \Xhline{1pt}
+    RSA                                                & 3                           & 3                                 & 3.560                    & 3.512                   & -1.35\%        \\
+    \Xhline{1pt}
+    CRC                                                & 1                          & 1                                 & 1.316                    & 1.309                   & -0.53\%        \\
+    \Xhline{1pt}
+    MemLS                                           & 12                        & 11                               & 12.05                    & 11.99                   & -0.49\%        \\
+    \Xhline{1pt}
+    Sense                                               & 42                        & 42                               & 42.95                    & 42.38                   & -1.33\%        \\
+    \Xhline{1.2pt}
+\end{tabular}
+\end{center}
+    \vspace{-10pt}
+\end{table} 

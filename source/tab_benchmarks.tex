@@ -1,0 +1,61 @@
+\begin{table}[t]
+\begin{center}
+    \vspace{-5pt}
+\caption{Benchmarks: compute, I/O and peri. oper.}  \label{tab:benchmarks}
+    \vspace{-5pt}
+\Fsize{8}
+\renewcommand{\arraystretch}{1.5}
+
+% Computing Operations Table
+%\begin{tabular*}{9cm}{@{\extracolsep{\fill}}Ic|cIc|cIc|cI}
+\begin{tabular}{Im{1.15cm}<{\centering}|m{0.85cm}<{\centering}Im{1.15cm}<{\centering}|m{0.8cm}<{\centering}Im{1.15cm}<{\centering}|m{0.85cm}<{\centering}I}
+    \Xhline{1.2pt}
+    compute operation       & time /cycles          & compute operation      & time /cycles          & compute operation       & time /cycles           \\
+    \Xhline{1.2pt}
+    crc16                & $122$                   & rsa                   & $409$       & fft16                  & $275$                  \\
+    \Xhline{1.2pt}
+\end{tabular}
+
+% I/O Operations Table
+%\begin{tabular*}{9cm}{@{\extracolsep{\fill}}Ic|c|c|cI}
+\begin{tabular}{Im{1.4cm}<{\centering}|c|c|m{1.9cm}<{\centering}I}
+    \Xhline{1.2pt}
+    I/O bus             & init time/cycles          & read time/cycles               & write time/cycles            \\
+    \Xhline{1.2pt}
+    I2C                 & $403$                         & $270 + 90 \times N$        & $180 + 90 \times N\tnote{*}$        \\
+    \Xhline{1pt}
+    SPI                 & $171$                         & $320 + 80 \times N$         & $320 + 80 \times N$        \\
+    \Xhline{1.2pt}
+\end{tabular}
+
+% Peripherals Table
+%\begin{tabular*}{9cm}{@{\extracolsep{\fill}}Ic|c|c|c|cI}
+\begin{tabular}{Ic|c|c|c|cI}
+    \Xhline{1.2pt}
+    Peripheral                  & Chip                  & init./ms          & I/O bus       & exec time/ms    \\
+    \Xhline{1.2pt}
+    ZigBee                       & ML7266             & 531        & SPI        & $5.7 + 0.14 \times N$    \\
+    %\Xhline{1pt}
+    %Bluetooth                  & CC2540              & 1101        & SPI       & $1.2 + 0.37 \times N$    \\
+    %\Xhline{1pt}
+    %Light Sensor              & NOA1305          & 1451        & I2C       & 0.644    \\
+    \Xhline{1pt}
+    Acc. Sensor           & LIS331DLH       & 2391        & I2C       & 0.451    \\
+    \Xhline{1pt}
+    Image Sensor             & LUPA1300        & 14,952     & I2C       & 118.0    \\
+    \Xhline{1pt}
+    Tmp. Sensor               & TMP101           & 566          & I2C       & 0.283    \\
+    \Xhline{1pt}
+    FeRAM Mem            & FM25V20          &  76           & SPI        & --    \\
+    \Xhline{1.2pt}
+\end{tabular}
+
+%\begin{tablenotes}
+%    \footnotesize
+%    \item[*] The number of transmited bytes.
+%\end{tablenotes}
+
+    \vspace{-10pt}
+\end{center}
+%\end{threeparttable}
+\end{table} 
