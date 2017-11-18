@@ -37,11 +37,9 @@
 \thispagestyle{firstpage}
 \pagestyle{plain}
 
-\begin{abstract}
+\input{source/abstract}
 
-Transiently Powered Computers (TPCs) powered by energy harvesting are becoming popular in today's IoT applications. Although energy harvesting enables the sensor nodes with smaller size and longer lifetime, unstable energy sources frequently break the system execution, posing new design challenges. Existing techniques enable continuous processor executions under intermittent power supply using non-volatile memories and checkpointing techniques. However, few addresses the unique challenges associating checkpoint and recover a syetem with multiple I/O and volatile peripherals devices, which causes major performance degradation. This paper fills this gap by introducing REMARK, a HW/SW co-designed framework enabling reliable and efficient operations in a TPC with multiple peripherals. A REMARK-enabled non-volatile processor chip has been fabricated, based on which a wireless sensor node is implemented to demonstrate reliable and efficient wireless transmission operations under intermittent power supply. Results show that the data transmission efficiency are improved by as much as $13\times$ compared with state-of-the-art. Furthermore, the sensitivity studies on REMARK are also carried out, resulting a program design guideline that improves the performance by as much as 36.5\%.
-
-\end{abstract}
+%\maketitle
 
 %\begin{spacing}{0.90}
 \input{source/introduction}
