@@ -1,26 +1,66 @@
 \section{System Overview of REMARK} \label{sec:system}
 %
-To address the two challenges raised in Sec.~\ref{sec:motivation}, this paper proposes REMARK, an efficient and reliable multi-device checkpointing framework.
-Fig.~\ref{fig:SystemArchitecture} shows the overview of REMARK framework, which contains an enhanced NVP architecture (Sec.~\ref{sec:hardware}), an offline program transformer (Sec.~\ref{sec:offline}) and an online recover procedure (Sec.~\ref{sec:online}).
-The offline transformer pre-sets checkpoints to convert the original program to recoverable program for online execution.
-The online recover procedure will adjust the checkpoints dynamically for further efficiency.
-%And the hardware architecture provides efficient and flexible processor and peripheral checkpointing function interface.
+To address the two challenges raised in Sec.~\ref{sec:motivation}, this paper proposes REMARK, an efficient and reliable hybrid checkpointing framework. 
+
+\subsection{Hybrid Checkpointing for TPC}   \label{sec:sysHybridCP}
+%
+As discussed above, there are three types of operations located in TPC that are executed on different devices and have different atomicity.
+REMARK divides the program according the operation types into static zones and dynamic zones, as shown in Fig.~\ref{fig:InteractDefine} (a).
+Static zones are constructed with I/O operations and the dynamic zones are constructed with computing operations.
+Note that, the source code of a program only contains computing and I/O operations. 
+All the peripheral operations are started by specific I/O operations.
+Based on this division, REMARK defines three different kinds of checkpoints to recover each type of operations.
+
+\noindent\textbf{Dynamic Checkpoint (DCP).\ \ }
+%
+DCPs are used to recover a computing operation by placing checkpoint exactly where power failure takes place to achieve optimal efficiency, as shown in Fig.~\ref{fig:InteractDefine} (b).
+DCPs do not need to be preset in the program and are enabled only in dynamic zones.
+
+\noindent\textbf{Static Peripheral Recover Checkpoint (SCCP).\ \ }
+%
+SCCPs are preset checkpoints that can restore the states of both the processor and the peripheral to re-execute an I/O operation, as shown in Fig.~\ref{fig:InteractDefine} (c).
+SCCPs are set before each I/O operation in static zones where dynamic checkpoints are disabled.
+
+\noindent\textbf{Static Peripheral Restart Checkpoint (SSCP).\ \ }
+SSCPs are preset checkpoints after each I/O operation that starts a peripheral operations.
+SSCP only recovers and restart the uncompleted peripheral operation and is compatible with the other two checkpoints, as shown in Fig.~\ref{fig:InteractDefine} (d).
+
+In conclusion, with these three kinds of checkpoints, a TPC can recover all the devices and uncompleted operation reliably and efficiently. 
+To realize this strategy, the REMARK has to provide hardware and software supports to establish the peripheral recovering and restarting functions for SCCP and SSCP.
+
+%   
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.48\textwidth]{Fig7_InteractDefine}
+    %\vspace{-15pt}
+    \caption{Interactions between processor and peripheral.}
+    %\vspace{-5pt}
+    \label{fig:InteractDefine}
+\end{figure}
+
+\subsection{HW/SW Architecture Support}   \label{sec:sysArch}
+%
+To support the hybrid checkpointing strategy, we propose a HW/SW cooperated framework to solve the two drawbacks posed by the inflexibility of NVP and inefficient recovery of peripherals, as discussed in Sec.~\ref{sec:motiHW}.
+Fig.~\ref{fig:SystemArchitecture} shows the overview of REMARK framework, which contains an enhanced NVP architecture and an offline program transformer to support peripheral recovering, restarting and the two peripheral-related checkpoints.
+
 The rest of this section presents the overview of each component.
 The details will be covered in the rest of this paper. 
 
-\vspace{5pt}
+%\vspace{5pt}
 % hardware
 \noindent\textbf{Enhanced NVP Hardware Support.} \\
-As shown in Fig. 4, on top of existing NVP and NVIO that can instantly backup and restore the system state, REMARK adds four new modules to satisfy the requirements for flexible B/R functions and efficient peripheral recovery in the multi-device checkpointing strategy.
+As shown in Fig. 4, on top of existing NVP that can instantly backup and restore the system state, REMARK adds four new modules to satisfy the requirements for flexible B/R functions and efficient peripheral recovery.
 
-Two of these modules are used to help implement flexible and reliable processor checkpointing.
-\textbf{B/R Manager} is designed based on the traditional B/R controller enabling both active and passive B/R operation.
+To realize flexible control of dynamic checkpointing functions, \textbf{B/R Manager} is designed based on the traditional B/R controller enabling both active and passive B/R operation.
 Moreover, bootstrap is also added in this module to control the processor starting procedure.
-\textbf{INT Recognizer (IRec)} is used to place safe checkpoint when power failure crashes a hardware interrupt where interactions between processor and peripherals locates.
-The other two modules are used to realize efficient peripheral configuration and restart.
-\textbf{Peripheral State Registers (PSRs)} is a real-time monitor of the peripheral state to support the efficient selective peripheral configuration.
-\textbf{Peripheral Restart Module (PRM)} accelerates the peripheral restart procedure by automatically locating the start function in the program and correctly returning.
+
+\textbf{Peripheral State Registers (PSRs)}, \textbf{Peripheral Restart Module (PRM)} and \textbf{INT Recognizer (IRec)} are used to realize efficient and reliable peripheral recovering and restarting.
+PSR is a real-time monitor storing the peripheral states to support the efficient peripheral recovering.
+PRM is used to accelerates the peripheral restart procedure by automatically locating the start function in the program and correctly returning.
 With the help of PRM, extra rollback of processor is removed.
+Moreover, recovering the peripheral interrupts may cause consistency problem since the states in the peripherals are ruined by power failures.
+To guarantee the reliability, \textbf{INT Recognizer (IRec)} is designed to place safe checkpoints when outages crash a peripheral interrupt.
+
 To access these new modules, five new instructions are proposed as shown in Table~\ref{tab:InstrSet}.
 Design details of the hardware architecture are presented in Sec.~\ref{sec:hardware} and Fig.~\ref{fig:HardwareArchitecture}.
 
@@ -47,18 +87,20 @@ Design details of the hardware architecture are presented in Sec.~\ref{sec:hardw
     \label{fig:OfflineStage}
 \end{figure*}
 
+
 % offline
-\vspace{5pt}
+%\vspace{5pt}
 \noindent\textbf{Offline Program Transformer.} \\
-REMARK addresses the multi-device checkpointing issue by pre-set the checkpoints according to checkpointing rules to ensure the recovery efficiency and reliability.
-The transformer is used to transform the original program into recoverable program where reliable multi-device checkpoints are inserted.
-The transformer first insert recoverable checkpoints by scanning the peripheral related operations.
-Then the interrupts are processed to realize efficient and reliable interrupt recovery with the support of IR.
+%
+To preset the static checkpoints in the program, REMARK proposes a program transformer convert a normal program to a recoverable program where safe checkpoints are inserted as shown in Fig.\ref{fig:OfflineStage}.
+APIs are provided to developers to help distinguish operations and divide the program zones.
+Together with the support of the hardware framework, REMARK realizes efficient and reliable peripheral recovery and restart.
 Details are presented in Sec.~\ref{sec:offline}.
 
 
 % Online
-\vspace{5pt}
+%\vspace{5pt}
+\begin{comment}
 \noindent\textbf{Online Recover Procedure.} \\
 With the support of hardware architecture and the offline program transformer, an online recover procedure is proposed containing two parts, peripheral configuration and restart.
 Based on PSRs, REMARK adopts an `init-used' strategy which only initializes and configures the invoked peripherals to avoid redundant reconfiguration overheads.
@@ -68,6 +110,7 @@ Initiator is supported by the bootstrap in B/R Manager to control the system res
 After power failure, Initiator restarts all the checkpointed peripherals instantly and individually.
 Considering the interactions of devices, the reliability of the entire recover procedure is guaranteed by the flexible B/R functions.
 Details are explained in Sec.~\ref{sec:online}.
+\end{comment}
 
 \input{source/tab_InstrSet}
 

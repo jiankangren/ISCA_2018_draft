@@ -1,7 +1,7 @@
 % packages & styles
 \usepackage{comment}
 \usepackage{graphicx}     % Insert figures
-\usepackage{setspace}      % line distance
+%\usepackage{setspace}      % line distance
 
 \usepackage{amssymb, amsmath}    % American Math Society, Symbols, Math equations
 \usepackage{pifont}         % Add a circle around 'x' (\textcircled{x})
@@ -23,91 +23,6 @@
 
 \graphicspath{{images/}}
 
-
-\begin{comment}
-\DeclareMathOperator*{\argmin}{argmin}
-\newtheorem{mydef}{Defination}
-\newtheorem{lemma}{Lemma}
-\newtheorem{assumption}{Assumption}
-\newcommand{\block}[1]{
-  \underbrace{\begin{matrix}1 & \cdots & 1\end{matrix}}_{#1}
-}
-\end{comment}
-
-%\newtheorem{lemma}[theorem]{Lemma}
-
-\begin{comment}
-\setlength\abovedisplayskip{0pt}
-\setlength\belowdisplayskip{0pt}
-\setlength\footnotesep{0pt}
-\setlength\floatsep{0pt}
-\setlength\textfloatsep{0pt}
-\end{comment}
-
-%\newenvironment{pproof}[1][Proof]{\begin{trivlist}
-%\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
-%\newenvironment{definition}[1][Definition]{\begin{trivlist}
-%\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
-%\newenvironment{example}[1][Example]{\begin{trivlist}
-%\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
-%\newenvironment{remark}[1][Remark]{\begin{trivlist}
-%\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
-
-\begin{comment}
-\newcommand{\vect}[1]{\boldsymbol{#1}}
-\renewcommand{\arraystretch}{1.1}
-%\renewcommand{\baselinestretch}{0.9} \normalsize
-\newcommand{\tabincell}[2]{\begin{tabular}{@{}#1@{}}#2\end{tabular}}
-\end{comment}
-
-%##############################################################################
-% Spacing
-%##############################################################################
-\begin{comment}
-\newcommand{\setblstr}[2][.]{%
-    \renewcommand{\baselinestretch}{#2}%
-    \ifx#1.\else\setarrstr  {#1}\fi%
-}
-
-\newcommand{\setarrstr}[1]{%
-    \renewcommand{\arraystretch}{#1}%
-}
-
-\newenvironment{blstr}[2][.]{%
-    \setblstr[#1]{#2}%
-}{%
-}
-\setlength{\textfloatsep} {12pt plus 2pt minus 2pt}
-\end{comment}
-%##############################################################################
-% Comments
-%##############################################################################
-\begin{comment}
-% Hiding
-\excludecomment{Hidden}
-\newcommand{\Hide}[1]{}
-\newcommand{\ShowHidden}{%
-    \includecomment{Hidden}%
-    \renewcommand{\Hide}[1]{%
-        ##1%
-    }%
-}
-
-\specialcomment{Notes}{%
-    \noindent$\Rightarrow\Rightarrow$%
-}{%
-    $\Leftarrow\Leftarrow$%
-}
-
-\providecommand{\Note}[1]{%
-    \noindent{\bf$\Rightarrow\Rightarrow$#1$\Leftarrow\Leftarrow$}%
-}
-
-\newcommand{\HideNotes}{%
-    \excludecomment{Notes}%
-    \renewcommand{\Note}[1]{}%
-}
-\end{comment}
 %##############################################################################
 % Fonts
 %##############################################################################
@@ -122,6 +37,8 @@
 }
 %\DeclareMathSizes{10}{18}{12}{8}
 %\end{comment}
+
+
 %##############################################################################
 % Tables
 %##############################################################################
@@ -139,6 +56,8 @@
 \setlength{\intextsep}{5pt plus 3pt minus 3pt}
 %\setlength\textfloatsep{1.25\baselineskip plus 1pt minus 1pt}
 %\end{comment}
+
+
 %##############################################################################
 % Algo
 %##############################################################################

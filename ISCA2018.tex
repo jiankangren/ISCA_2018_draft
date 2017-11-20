@@ -13,22 +13,29 @@
 \usepackage{hyperref}
 \input{config/localstyle}
 
+% Always include hyperref last
+\usepackage[bookmarks=true,breaklinks=true,letterpaper=true,colorlinks,linkcolor=black,citecolor=blue,urlcolor=black]{hyperref}
 
-%%%%%%%%%%%---SETME-----%%%%%%%%%%%%%
+% Ensure letter paper
+\pdfpagewidth=8.5in
+\pdfpageheight=11in
+
+%%%%%%%%%%%-----SETME-----%%%%%%%%%%%
 \newcommand{\iscasubmissionnumber}{364}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \fancypagestyle{firstpage}{
   \fancyhf{}
-\setlength{\headheight}{50pt}
 \renewcommand{\headrulewidth}{0pt}
   \fancyhead[C]{\normalsize{ISCA 2018 Submission
       \textbf{\#\iscasubmissionnumber} \\ Confidential Draft: DO NOT DISTRIBUTE}} 
-  \pagenumbering{arabic}
+  \fancyfoot[C]{\thepage}
 }  
 
+\pagenumbering{arabic}
+
 %%%%%%%%%%%---SETME-----%%%%%%%%%%%%%
-\title{REMARK: Reliable and Efficient Multi-device Recovery Framework for Transiently Powered Computers} 
+\title{Intermittent Execution for Systems with Concurrent Atomic Peripherals} 
 \author{}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -47,14 +54,14 @@
 \input{source/system}
 \input{source/hardware}
 \input{source/offline}
-\input{source/online}
+%\input{source/online}
 \input{source/implementation}
 \input{source/evaluation}
 \input{source/related}
 \input{source/tails}
 %\end{spacing}
 
-%%%%%%% -- PAPER CONTENT ENDS -- %%%%%%%%
+%%%%%%% -- {}PAPER CONTENT ENDS -- %%%%%%%%
 
 %%%%%%%%% -- BIB STYLE AND FILE -- %%%%%%%%
 \bibliographystyle{ieeetr}

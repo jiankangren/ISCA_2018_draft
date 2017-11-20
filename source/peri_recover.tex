@@ -1,6 +1,23 @@
-\section{Enhanced NVP Architecture} \label{sec:hardware}
+\section{Peripheral Recover and SCCP}	\label{sec:periRec}
 %%\vspace{-5pt}
 %
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 To impletement REMARK, NVP is enhanced by four hardware modules to support flexible B/R functions and realize efficient peripheral recovery.
 
 %\vspace{5pt}
@@ -17,6 +34,25 @@ The B/R controller is enhanced by control logics which are used to select the tr
 Two instructions, \emph{ABR} and \emph{EBR} (Table~\ref{tab:InstrSet}), are added to enable the active B/R functions.
 Active backup is realized by \emph{ABR 1}, and active restore is \emph{ABR 0}.
 In addition, \emph{EBR 0} and \emph{EBR 1} are used to disable and enable the B/R function, respectively.
+
+%
+Bootstrap is a module used to control the system clock and the reset signals.
+Its work flow is shown in Fig.~\ref{fig:InitiatorFlow}.
+After the system is powered on, Bootstrap selects whether to enter the restart procedure or to start the program from the very beginning according to the \emph{$1^{st}\_start$} signal.
+\emph{$1^{st}\_start$} is an external signal set by users.
+If \emph{$1^{st}\_start$} is set, the processor is started from the very beginning.
+Otherwise, Initiator is started to recover the peripherals and restore the processor.
+%Bootstrap generates the system clock for the processor and resets the modules before the entire system starts.
+%Bootstrap can also gate the system clock when an active backup function is invoked.
+
+%
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.48\textwidth]{Fig9_InitiatorFlow.pdf}
+    %\vspace{-10pt}
+    \caption{The flow chart of Initiator.}
+    \label{fig:InitiatorFlow}
+\end{figure}
 
 %\vspace{5pt}
 \noindent\textbf{Interrupt Recognizer (IRec).} \\

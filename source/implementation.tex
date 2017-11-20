@@ -1,12 +1,12 @@
 \section{Hardware Implementation} \label{sec:implementation}
-\vspace{-5pt}
+%\vspace{-5pt}
 %
 In order to evaluate the performance and resiliency, we implements REMARK on an Intel 8051 based NVP as well as a hardware platform, \emph{NVnode}.
 In this section, we first present the hardware platform in Sec.~\ref{sec:implHW}. 
 Then, the improvement of the peripheral recovery and the overall performance are presented in Sec.~\ref{sec:implPeriRecover} and Sec.~\ref{sec:implOverall}, respectively. 
 
 \subsection{Hardware Platform} \label{sec:implHW}
-\vspace{-5pt}
+%\vspace{-5pt}
 %NVP
 Fig.~\ref{fig:NVnode} shows a picture of NVP chip and NVnode platform.
 The structure of NVnode is presented in Fig.~\ref{fig:ImpNVRF}.
@@ -30,26 +30,26 @@ The SPI interface is used to mount to SPI bus, which also connect to a ZigBee tr
 \begin{figure}[t]
     \centering
     \includegraphics[width=0.48\textwidth]{Fig11_NVnode.pdf}
-    \vspace{-10pt}
+    %\vspace{-10pt}
     \caption{The hardware platform, NVnode. REMARK is implemented with the B/R manager and the NVRF controller in an 8051 NVP chip under $0.13\mu m$ technology.}
-    \vspace{-5pt}
+    %\vspace{-5pt}
     \label{fig:NVnode}
 \end{figure}
 
 \begin{figure}[htpb]
     \centering
-    \vspace{-0pt}
+    %\vspace{-0pt}
     \includegraphics[width=0.4\textwidth]{Fig11_ImpNVRF.pdf}
-    \vspace{-2pt}
+    %\vspace{-2pt}
     \caption{The structure of NVnode. The energy storage is $20\mu F$. NVRF implements the functionality of PSRs and PRM to accelerate the peripheral recovery.}
-    \vspace{-5pt}
+    %\vspace{-5pt}
     \label{fig:ImpNVRF}
 \end{figure}
 
 \input{source/tab_prototype}
 
 \subsection{Device Recovery Improvement of REMARK} \label{sec:implPeriRecover}
-\vspace{-5pt}
+%\vspace{-5pt}
 %
 To show the effectiveness of REMARK, this subsection first shows the overhead reduction of a single transceiver recovery. 
 Then, it shows the efficiency improvement when there are multiple peripheral devices. 
@@ -79,14 +79,14 @@ With these factors, REMARK accelerates the peripheral recovery procedure by $34.
 \begin{figure*}[htpb]
     \centering
     \includegraphics[width=1\textwidth]{Fig12_ImpCompare.pdf}
-    \vspace{-25pt}
+    %\vspace{-25pt}
     \caption{Recover overhead and task completeness comparison between REMARK and SDRB.}
-    %\vspace{-5pt}
+    %%\vspace{-5pt}
     \label{fig:ImpCompare}
 \end{figure*}
 
 \subsection{Overall Performance Evaluation} \label{sec:implOverall}
-\vspace{-5pt}
+%\vspace{-5pt}
 %
 The improvement in recovery performance leads to better overall system performance. 
 A \emph{`bridge-monitoring'} application, a pure transmission application, and a pure sensing application are used to evaluate the overall performance improvement.
@@ -107,11 +107,11 @@ Due to the improvement in task completion efficiency, the energy consumption is 
 \begin{figure}[t]
     \centering
     \includegraphics[width=0.5\textwidth]{Fig12_ImpOverall.pdf}
-    \vspace{-20pt}
+    %\vspace{-20pt}
     \caption{\emph{bridge-monitoring} application and task completeness comparison between REMARK and SDRB.}
-    \vspace{-5pt}
+    %\vspace{-5pt}
     \label{fig:ImpOverall}
-    \vspace{-0pt}
+    %\vspace{-0pt}
 \end{figure}
 
 \begin{comment}
@@ -119,10 +119,10 @@ Due to the improvement in task completion efficiency, the energy consumption is 
 \begin{figure}[t]
     \centering
     \includegraphics[width=0.3\textwidth]{Fig12_ImpRecover.pdf}
-    \vspace{-10pt}
+    %\vspace{-10pt}
     \caption{Performance comparison of REMARK and REMARK by executing \emph{bridge-monitoring} for $2$ minutes on NVnode.}
     \label{fig:ImpRecoverEvaluate}
-    \vspace{-0pt}
+    %\vspace{-0pt}
 \end{figure}
 
 \begin{comment}
@@ -146,9 +146,9 @@ In conclusion, \emph{REMARK guarantees the reliability of I/O and peripheral ope
 \begin{figure}[t]
     \centering
     \includegraphics[width=0.5\textwidth]{Fig13_ImpOverheadDeadlock.pdf}
-    \vspace{-20pt}
+    %\vspace{-20pt}
     \caption{{Overhead and resilience analysis. (a) the overhead of wrapper code. (b) a micro case study of the worst case when the outage rate is too high. (c) a sweep analysis of recovery overhead with power failure rates.}}
     \label{fig:ImpOverheadDeadlock}
-    \vspace{5}
+    %\vspace{5}
 \end{figure}
 \end{comment}
