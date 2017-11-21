@@ -31,17 +31,17 @@ Fig.~\ref{fig:TPCmodel} (b) shows the program model of a concurrent peripheral o
 Before all, a peripheral should be completely initialized via I/O operations by the processor.
 Then, the processor will write the start command to the peripheral, also via I/O operation, to start the actuation of the peripheral.
 After that, the peripheral concurrently operates a specific peripheral operation and returns an interrupt to announce the processor when completed.
-From this procedure, we can conclude that, (1) the peripherals requires more preparations to get ready; (2) I/O operations are atomic interacting operations between in the control thread of both processor and peripherals; (3) some peripheral operations are atomic, concurrent operations that only loaded on peripherals.
+From this procedure, we conclude that, (1) the peripherals requires more preparations to get ready; (2) I/O operations are atomic interacting operations between in the control thread of both processor and peripherals; (3) some peripheral operations are atomic, concurrent operations that only loaded on peripherals.
 
 Fig.~\ref{fig:TPCmodel} (c) shows an image sensing example to explain the model.
-The processor maintains two threads, the main thread and a timer thread. 
+The processor maintains two threads, the timer thread and the main thread. 
 The timer thread periodically collects and stores the images into buffer.
 In the main thread, the processor first initializes all the peripherals.
 Then, in the loop of main thread, the processor processes and encodes the images with a JPEG encoder whenever the buffer is not empty.
 When the process has stored enough encoded images, the sensor node will transmit all the images back to the server.
 In this system, the image sensor is an input-type peripheral that collects outside images.
 The radio transmitter is an output-type peripheral to transmit the collected images to the server for further processes.
-The JPEGer is a compute-type peripheral to improve the computing performance and release the burden of the processor.
+
 
 %
 In intermittent power supply scenario, such a system can efficiently recover the processor and the computing operations with existed techniques. 
@@ -65,7 +65,7 @@ Existing checkpointing strategy faces inefficient and reliability issues in reco
 % static checkpointing
 Static checkpointing strategy is safe for atomic operations but not efficient for non-atomic operations.
 The red lines in Fig.~\ref{fig:motiRollback} (a) shows the efficiency issue caused by static checkpointing strategies~\cite{ransford2012mementos,Lucia2015,jayakumar2014quickrecall}.
-Three execution threads are shown in the figure from top to bottom, that are the JPEGer thread, the sensor thread and the main thread of the processor.
+Three execution threads are shown, from top to bottom: the JPEGer thread, the sensor thread and the main thread of the processor.
 The program presets checkpoints in position $cp1$, $cp2$ and $cp3$ to protect the atomic operations.
 During execution, the program successively starts the sensor and the JPEGer.
 Once power failure takes place during the I/O and peripheral operations, the program has to rollback to the complete safe position $cp1$ to restart all the devices which leads to extra waiting time and large rollback overheads.
@@ -78,7 +78,7 @@ From $cp4$, the main thread can efficiently continue with not rollback overhead,
 Not only the disrupted peripheral operations failed, the peripherals are also left uninitialized which will leads to more errors when the subsequent peripheral-related operations are executed.
 
 %
-To realize both safe and efficient recovery, we need to combine the static and the dynamic checkpointing strategies for different operation types.
+Both static and the dynamic checkpointing strategies are needed to achieve safe and efficient recovery.
 In Fig.~\ref{fig:motiRollback} (b), if the processor is restored to the interrupt position without rollback and all the peripherals are restarted from the static checkpoints before the atomic operations, the recovery overhead can be reduced by 58.5\%.
 Therefore, an automatic checkpointing tool supporting a dynamic checkpointing strategy for TPCs with multiple peripheral is needed. 
 
@@ -109,8 +109,8 @@ Therefore, it requires flexible B/R interfaces instead of the passive approach t
 On the other hand, checkpointing and recovering a peripheral also poses challenges.
 Fig.~\ref{fig:motiNVM} shows the structure of an image sensor, a typical volatile peripheral.
 The sensor contains a digital part using registers to store the states and data, and the analog part to realize the image collection operation.
-When power failure takes place during a sensing task, the system has to not only restore the states in the register files, but also restart the analog part to re-execute the uncompleted sensing task to avoid the input-type failure.
-
+When power failure takes place during a sensing task, the system has to not only restore the states in the register files, but also restart the analog part to re-execute the uncompleted sensing task to avoid the input-type failure, which is the exact problem beween associate processors and sensors.
+ To efficiently and reliably recover concurrent TPCs, the system should support hybrid checkpointing, peripheral status monitor as well as the peripheral restart modules, which are all missing in existing NVPs.
 \begin{figure}[t]
     \centering
     \includegraphics[width=0.48\textwidth]{Fig1_motiNVM}
@@ -120,18 +120,18 @@ When power failure takes place during a sensing task, the system has to not only
     \label{fig:motiNVM}
 \end{figure}
 
-To restore the states of the digital parts, existing approaches~\cite{jayakumar2014quickrecall,li2016hw} provides the 'load-and-backup' method.
-To 'load-and-backup' with software methods, the processor has to read the internal registers in the sensor via I/O operations, which is energy hungry and time-consuming.
-Moreover, as the number of peripherals increases, the recovery overhead becomes particularly significant.
+%To restore the states of the digital parts, existing approaches~\cite{jayakumar2014quickrecall,li2016hw} provides the 'load-and-backup' method.
+%To 'load-and-backup' with software methods, the processor has to read the internal registers in the sensor via I/O operations, which is energy hungry and time-consuming.
+%Moreover, as the number of peripherals increases, the recovery overhead becomes particularly significant.
 % Any proof?
-Li, et al.~\cite{li2016hw} provide hardware based solution by replacing peripheral registers to NVFFs which realizes efficient 'load-and-backup' procedure. 
-But it requires hardware modifications inside the peripherals which is unrealistic considering the variety of peripheral types and producers.
-Therefore, an efficient and general state restoring strategy is needed.
-Furthermore, none existing strategy addresses the problem of restarting an uncompleted peripheral operations. 
-Current systems can only rolling the entire system back to where the broken peripheral operations just started.
-If a hardware module can simply re-execute the peripheral start program and return correctly, the peripheral restart can be more efficient.
+%Li, et al.~\cite{li2016hw} provide hardware based solution by replacing peripheral registers to NVFFs which realizes efficient 'load-and-backup' procedure. 
+%But it requires hardware modifications inside the peripherals which is unrealistic considering the variety of peripheral types and producers.
+%Therefore, an efficient and general state restoring strategy is needed.
+%Furthermore, none existing strategy addresses the problem of restarting an uncompleted peripheral operations. 
+%Current systems can only rolling the entire system back to where the broken peripheral operations just started.
+%If a hardware module can simply re-execute the peripheral start program and return correctly, the peripheral restart can be more efficient.
 
-Therefore, to efficiently and reliably recover concurrent TPCs, the enhanced NVP should support hybrid checkpointing, peripheral status monitor as well as the peripheral restart modules, which are all missing in existing NVPs.
+%Therefore, to efficiently and reliably recover concurrent TPCs, the enhanced NVP should support hybrid checkpointing, peripheral status monitor as well as the peripheral restart modules, which are all missing in existing NVPs.
 
 
 

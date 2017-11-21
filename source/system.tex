@@ -26,8 +26,7 @@ SSCPs are preset checkpoints after each I/O operation that starts a peripheral o
 SSCP only recovers and restart the uncompleted peripheral operation and is compatible with the other two checkpoints, as shown in Fig.~\ref{fig:InteractDefine} (d).
 
 In conclusion, with these three kinds of checkpoints, a TPC can recover all the devices and uncompleted operation reliably and efficiently. 
-To realize this strategy, the REMARK has to provide hardware and software supports to establish the peripheral recovering and restarting functions for SCCP and SSCP.
-
+To realize this strategy, REMARK has to provide hardware and software co-operation.
 %   
 \begin{figure}[t]
     \centering
@@ -49,7 +48,7 @@ The details will be covered in the rest of this paper.
 %\vspace{5pt}
 % hardware
 \noindent\textbf{Enhanced NVP Hardware Support.} \\
-As shown in Fig. 4, on top of existing NVP that can instantly backup and restore the system state, REMARK adds four new modules to satisfy the requirements for flexible B/R functions and efficient peripheral recovery.
+As shown in Fig.~\ref{fig:InteractDefine}, on top of existing NVP that can instantly backup and restore the system state, REMARK adds four new modules to satisfy the requirements for flexible B/R functions and efficient peripheral recovery.
 
 To realize flexible control of dynamic checkpointing functions, \textbf{B/R Manager} is designed based on the traditional B/R controller enabling both active and passive B/R operation.
 Moreover, bootstrap is also added in this module to control the processor starting procedure.
@@ -58,7 +57,7 @@ Moreover, bootstrap is also added in this module to control the processor starti
 PSR is a real-time monitor storing the peripheral states to support the efficient peripheral recovering.
 PRM is used to accelerates the peripheral restart procedure by automatically locating the start function in the program and correctly returning.
 With the help of PRM, extra rollback of processor is removed.
-Moreover, recovering the peripheral interrupts may cause consistency problem since the states in the peripherals are ruined by power failures.
+Moreover, recovering the peripheral interrupts may cause inconsistency problem since the states in the peripherals are ruined by power failures.
 To guarantee the reliability, \textbf{INT Recognizer (IRec)} is designed to place safe checkpoints when outages crash a peripheral interrupt.
 
 To access these new modules, five new instructions are proposed as shown in Table~\ref{tab:InstrSet}.

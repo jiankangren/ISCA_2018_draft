@@ -1,59 +1,64 @@
 \section{Introduction} \label{sec:introduction}
-%   1.5pages
-% Transiently Powered Systems and Sustaining computing.
-Transiently Powered Computers (TPCs)~\cite{Ma2015Architecture, ransford2013transiently, ransford2012mementos} are a new class of battery-less embedded systems that depend solely on energy harvested from ambient environment.
-TPC systems are especially attractive to many IoT applications since it is often challenging to employ traditional batteries where it is inconvenient, costly or even dangerous to replace or service batteries. 
-Energy harvesting can eliminate the need for batteries or wires and enable long-term operation of these systems with little maintenance.
-However, design of these systems faces unique challenges since the power supply is intrinsically unstable and affected by the ambient environment conditions~\cite{Ma2015Architecture, ransford2013transiently,wang2014mppt}.
-For example, the reliability of solar powered systems largely depends on the weather, location and environmental changes of different applications~\cite{Abas2015Solar, Alippi2011A, Malaver2014Development, Rojas2015Design}.
-%Considering the intermittent power supply, efforts have to be made to ensure the reliability and efficiency of the system under frequent power failures.
-%, to guarantee the progress of tasks.
+%
+By 2020, 50 billion Internet of Things (IoTs) devices are expected to be connected to the Internet~\cite{nordrum2016popular,cisco2013IoT}.
+By 2025, these connected IoTs are predicted to generate more than 11000 billion dollars economic value~\cite{manyika2015unlocking}.
+In some domains, the IoTs have already exhibited tremendous potential to bring new opportunities with it, for instance, 
+the wearable devices~\cite{metcalf2016wearables}, the smart home~\cite{ho2016smart}, the smart industry~\cite{shariatzadeh2016integration}, and the smart meters~\cite{azariadi2016ecg,haghi2017wearable}.
 
-In a normal system, intermittent power supply brings unpredictable outages and will end the progress because of execution state loss.
-Previous works provide static and dynamic checkpointing strategies allowing system to roll back to a preformed checkpoint and continue the uncompleted program.
-Static checkpointing strategy presets checkpoints in the programs before real-time execution.
-Mementos~\cite{ransford2012mementos} provides an automatic checkpoint placing strategy to maximize task progress.
-DINO~\cite{Lucia2015} and Chain~\cite{colin2016chain}tackles the data consistency problem by placing checkpoints with proposed runtime library and API to construct transactional and atomic operations. 
-Dynamic checkpointing strategy utilizes hardware modifications to enable run-time checkpointing to minize rollback distance. 
-Hibernus~\cite{balsamo2015hibernus,Balsamo2016Hibernus++} and QuickRecall~\cite{jayakumar2014quickrecall,jayakumar2015q} utilizes voltage detector to trigger software state backup in case of power failures. 
-NVP~\cite{wang20123us,liu2016a,Liu2015Ambient} proposes control circuit to realize data migration between processor and FeRAM  memory according to supply voltage changes.
-In conclusion, static checkpointing can solve the data consistency problem dispense with hardware modifications in TPC, but frequent rollbacks will significantly slow down the system forward progress~\cite{Ma2015Architecture}. 
-On the other hand, dynamic checkpointing with hardware backup mechanism optimize the efficiency of system recovery, but cannot support atomic operation recovery with passive backup trigger~\cite{Maeng2017}.  
+With more application scenarios deployed and more devices connected to the Internet, a vital challenge is observed to limit
+the wider application of IoTs - the battery life.
+To begin with, it is inconvenient to charge the batteries in some scenarios. 
+Today, most of the wearable devices needs to be charged once a day or several days~\cite{}.
+In addition, renewing batteries in huge amount like those IoTs in smart industry~\cite{wang2016towards} or in very distributed area like environmental and infrastructure monitoring~\cite{} can
+very costly, and sometimes unrealistic.
+What's more, the existence of batteries significantly frustrates application with volume and / or safety concerns, for example in the implantable devices~\cite{}.
 
-Although the above mentioned checkpointing strategies realizes efficient and safe intermittent execution of computing tasks on a processor, none consider the recovery of peripheral(I/O) devices.
-Peripheral brings two main challenges to a transiently powered system.
-Firstly, a peripheral needs to be initialized and well configured before execution. 
-NVIO~\cite{li2016hw} tries to solve the problem by replace volatile DFFs to nonvolatile FeRAM based NVFF. 
-However, the extreme wide variety of peripherals types and producers make it unrealistic to implement NVFF replacements to all peripherals. 
-%Furthermore, some peripherals cannot be completely recovered by simple restoring peripheral states~\cite{}. 
-Secondly, peripheral actuations are mostly concurrent atomic operations~\cite{Lucia2017} causing consistency issues.
-Moreover, the atomicity of peripherals require static checkpointing strategy which is conflict with the most efficient but inflexible NVP and leads to low efficiency.
-Alpaca~\cite{Maeng2017} proposes a checkpointing-free peripheral supporting recover framework by enabling peripheral operation recovery in a single control thread, but lack of discussion on multiple concurrent threads recovery in intermittent power scenario.
+Energy harvesting techniques emergie as one of the promising techniques to solve problems brought by batteries. By harvesting energy from ambient environment, including
+solar, vibration, RF and thermal energy, the lifetime of IoTs can be eventually infinite. This can essentially extend the application domain of IoTs, for instance,
+smart parking~\cite{}, environment monitor~\cite{}, smart argriculture~\cite{}, implantable devices~\cite{} etc.
+
+While a coin has two sides, the energy harvesting can provide only unstable power supplies, depending on the application scenarios~\cite{}.
+In the processor level, various techniques have been proposed to mitigate the inconsistency problem brought by the unstable power supply.
+These techniques includes software checkpointing under guidance of programming languages or compliers~\cite{}, and hardware based architectural supports~\cite{}.
+Although the processor for signal processing is in same extend mitigated, the energy and time distribution of processing data actually takes only very small part.
+For instance, the signal processing on processor takes less than 20\% in every wake-up cycles, while peripherals initializations contribute to over 80\%~\cite{}.
+Similar observations can be found in really deployed systems: 
+WISPcam (image sensor + RF + memory)~\cite{}, Implant cochlear (acoustic encoder + demodulator + sound sensor)~\cite{}, Mini-satellite (RF + thermometer + gyroscope + magnetometer + gas sensors)~\cite{}.
+Optimizating consistency with processor alone can not solve the system level challenges in energy harvesting systems.
+The peripheral recovery is another critical problem in energy harvesting scenarios and remaining unsolved, and is an important but last step to bring real energy 
+harvesting systems to life[Cite Brandon-SNAPL17,Maeng-OOPSLA17 ].
+
+Modifying the architecture of all peripherals in a system to support unstable power supply can mitigate the inconsistency problem within the peripherals, but the data transmission between the processor
+and the peripherals remains unstable. 
+More importantly, peripheral actuations are mostly concurrent atomic operations~\cite{Lucia2017}, which requires static checkpointing, conflicting with the dynamic NVPs based solutions. Directly grafting NVP techniques to peripherals to be nonvolatile is rough and inefficient.
+In addition, considering the amount of various peripherals in the market, it is not time and cost efficient to make all the peripherals nonvolatile.
+
 
 % Introduce the newly presented design methodology.
-Targeting the recovery problem of TPC with multiple devices, this paper proposes REMARK, a \underline{R}eliable and \underline{E}fficient \underline{M}ulti-device Recovery Fr\underline{A}mewo\underline{RK}, containing novel hardware components on top of NVP and corresponding software optimizations.
-REMARK proposes a hybrid checkpointing strategy by combining safe static checkpointing and highly efficient hardware based dynamic checkpointing in NVP to achieve the target of both efficiency and reliability.
-To accelerate the recovery procedure of peripherals, REMARK provides a peripheral configuration tracking strategy and hardware recovery modules.
+Targeting at the recovery of a system with multiple peripherals, we propose REMARK, a \underline{R}eliable and \underline{E}fficient \underline{M}ulti-device Recovery Fr\underline{A}mewo\underline{RK}, for hardware and software co-optimization on top of a NVP to address the system level issues.
+
+
 The major contributions are listed as follows.
 
 %
 \begin{itemize}
-    \item This paper addresses the problem of concurrent execution of peripherals in intermittent power scenarios.
+    \item This paper addresses the problem of concurrent execution of peripherals in intermittent power scenarios, by proposing a hybrid checkpointing strategy, combining static checkpointing for peripherals and efficient dynamic checkpointing in NVP to achieve both reliability and efficiency.
 
-    \item REMARK hides the complexity associated with peripheral recovery by automatic peripheral configuration tracking strategfy and efficient recovering architecture. It maintains easy-to-configure interfaces for TPC designer such that they can focus on the functionality instead of peripheral implementation details. 
+    \item To accelerate the recovery procedure of peripherals, for the first time REMARK provides a peripheral configuration tracking strategy and according methdology for hardware-assisted recovery modules, which simplifies the peripheral recovery through an easy-to-configure interfaces. 
 
-    \item We implement a REMARK-enabled NVP chip to combine the static checkpoint pre-placement and the dynamic run-time checkpointing. A real application is evaluated on this platform and the results show that REMARK can speed up the data transmission tasks by $13\times$ compared with state-of-the-art solutions. 
+	\item We analyze the design tradeoffs in REMARK to improve the resistance against deadlock and reduce the timing overhead by as much as 36.5\%.
 
-    \item We analyze the impact of design parameters of REMARK on a sofware simulator, NVnodeSim. Based on these analyses, program design guidelines are proposed to improve the resistance against deadlock and reduce the timing overhead by as much as 36.5\%.
+    \item To verify the architecture, a REMARK-enabled chip is fabricated. Furthermore a real application is evaluated and the results show that REMARK can speed up the data transmission tasks by $13\times$ compared with traditional solutions. 
+
 \end{itemize}
 
-The rest of this paper is organized as follows.
-Sec.~\ref{sec:motivation} illustrates the challenges to design a recovery strategy for TPCs with multiple peripherals.
-Sec.~\ref{sec:system} introduces the hybrid checkpointing strategy and the software/hardware framework overview of REMARK.
-The details of these three components are presented in Sec.~\ref{sec:hardware} and Sec.~\ref{sec:offline}, respectively. 
-Sec.~\ref{sec:implementation} presents the fabrication and the performance of a REMARK-enabled NVP chip.
-Sec.~\ref{sec:evaluation} explores the impact of different design parameters in REMARK with a software simulator and summarizes design rules for TPC systems.
-The remaining sections conclude the related works and this paper.
+%The rest of this paper is organized as follows.
+%Sec.~\ref{sec:motivation} illustrates the challenges to design a recovery strategy for TPCs with multiple peripherals.
+%Sec.~\ref{sec:system} introduces the hybrid checkpointing strategy and the software/hardware framework overview of REMARK.
+%The details of these three components are presented in Sec.~\ref{sec:hardware} and Sec.~\ref{sec:offline}, respectively. 
+%Sec.~\ref{sec:implementation} presents the fabrication and the performance of a REMARK-enabled NVP chip.
+%Sec.~\ref{sec:evaluation} explores the impact of different design parameters in REMARK with a software simulator and summarizes design rules for TPC systems.
+%The remaining sections conclude the related works and this paper.
 
 %\bibliographystyle{ieeetr}
 %\bibliography{references}
